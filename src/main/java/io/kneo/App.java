@@ -1,4 +1,4 @@
-package main.java;
+package io.kneo;
 
 // App.java
 public class App {
