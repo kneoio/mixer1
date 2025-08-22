@@ -108,7 +108,7 @@ public class AudioMerger {
         String outputFile = "C:/Users/justa/Music/merged_output.wav";
 
         // Choose a profile or use MANUAL for custom settings
-        MixProfile profile = MixProfile.QUICK_CUT;
+        MixProfile profile = MixProfile.RADIO_STYLE;
         MixSettings settings = profile.getSettings();
 
         // For MANUAL profile, override settings here:

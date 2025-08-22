@@ -55,10 +55,39 @@ public class AudioOutroIntro {
             createOutroIntroMix(mainSong, introSong, outputFile, settings);
             System.out.println("Outro-intro mix created successfully: " + outputFile);
             printSettings(settings);
+
+            // ADD THE THIRD SONG
+            addSongToEnd(outputFile, "C:/Users/justa/Music/06. Dina Summer - Nothing To Hide (Moderna Remix).wav", "C:/Users/justa/Music/final_complete_mix.wav");
+            System.out.println("Final mix with third song created: C:/Users/justa/Music/final_complete_mix.wav");
         } catch (Exception e) {
             System.err.println("Error creating outro-intro mix: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    // NEW FUNCTION - Just append a song to the end
+    public static void addSongToEnd(String existingMixPath, String songToAddPath, String outputPath)
+            throws IOException, UnsupportedAudioFileException {
+
+        List<Float> existingMix = readAudioFile(existingMixPath);
+        List<Float> songToAdd = readAudioFile(songToAddPath);
+
+        // Remove silence from END of existing mix
+        int endIndex = existingMix.size() - 1;
+        for (int i = existingMix.size() - 1; i >= 0; i--) {
+            if (Math.abs(existingMix.get(i)) > 0.01f) {
+                endIndex = i;
+                break;
+            }
+        }
+
+        // Trim the existing mix
+        List<Float> trimmedMix = new ArrayList<>(existingMix.subList(0, endIndex + 1));
+
+        // Add the new song
+        trimmedMix.addAll(songToAdd);
+
+        writeAudioFile(trimmedMix, outputPath);
     }
 
     private static void printSettings(OutroIntroSettings settings) {
